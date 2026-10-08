@@ -1,1 +1,144 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculadora</title>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            font-family: Arial, sans-serif;
+        }
+        .calculadora {
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+            padding: 20px;
+            width: 300px;
+        }
+        .display {
+            background: #333;
+            color: #0f0;
+            font-size: 2em;
+            padding: 20px;
+            border-radius: 5px;
+            text-align: right;
+            margin-bottom: 20px;
+            min-height: 40px;
+            word-wrap: break-word;
+            word-break: break-all;
+        }
+        .botones {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 10px;
+        }
+        button {
+            padding: 20px;
+            font-size: 1.2em;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            background: #f0f0f0;
+            transition: background 0.3s;
+        }
+        button:hover {
+            background: #e0e0e0;
+        }
+        button.operador {
+            background: #667eea;
+            color: white;
+        }
+        button.operador:hover {
+            background: #5568d3;
+        }
+        button.igual {
+            background: #48bb78;
+            color: white;
+            grid-column: span 2;
+        }
+        button.igual:hover {
+            background: #38a169;
+        }
+        button.limpiar {
+            background: #f56565;
+            color: white;
+            grid-column: span 2;
+        }
+        button.limpiar:hover {
+            background: #e53e3e;
+        }
+    </style>
+</head>
+<body>
+    <div class="calculadora">
+        <div class="display" id="display">0</div>
+        <div class="botones">
+            <button class="limpiar" onclick="limpiar()">C</button>
+            <button class="operador" onclick="agregar('/')">/</button>
+            <button class="operador" onclick="agregar('*')">*</button>
+            
+            <button onclick="agregar('7')">7</button>
+            <button onclick="agregar('8')">8</button>
+            <button onclick="agregar('9')">9</button>
+            <button class="operador" onclick="agregar('-')">-</button>
+            
+            <button onclick="agregar('4')">4</button>
+            <button onclick="agregar('5')">5</button>
+            <button onclick="agregar('6')">6</button>
+            <button class="operador" onclick="agregar('+')">+</button>
+            
+            <button onclick="agregar('1')">1</button>
+            <button onclick="agregar('2')">2</button>
+            <button onclick="agregar('3')">3</button>
+            <button class="operador" onclick="retroceder()">⌫</button>
+            
+            <button onclick="agregar('0')" style="grid-column: span 2;">0</button>
+            <button onclick="agregar('.')">.</button>
+            <button class="igual" onclick="calcular()">=</button>
+        </div>
+    </div>
 
+    <script>
+        let display = document.getElementById('display');
+        let valor = '';
+
+        function agregar(char) {
+            if (valor === '0' && char !== '.') {
+                valor = char;
+            } else {
+                valor += char;
+            }
+            actualizarDisplay();
+        }
+
+        function limpiar() {
+            valor = '';
+            actualizarDisplay();
+        }
+
+        function retroceder() {
+            valor = valor.slice(0, -1);
+            actualizarDisplay();
+        }
+
+        function calcular() {
+            try {
+                valor = eval(valor).toString();
+            } catch (e) {
+                valor = 'Error';
+            }
+            actualizarDisplay();
+        }
+
+        function actualizarDisplay() {
+            display.textContent = valor || '0';
+        }
+    </script>
+</body>
+</html>
